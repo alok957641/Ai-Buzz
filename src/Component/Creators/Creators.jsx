@@ -1,28 +1,34 @@
+import creator1 from "../../assets/creator1.jpg"
+import creator2 from "../../assets/creator2.jpg"
+import creator3 from "../../assets/creator3.jpg"
+import creator4 from "../../assets/creator4.jpg"
+import creator5 from "../../assets/creator5.jpg"
+
 export default function TrustedCreators() {
   const creators = [
     {
       name: "thecrazychique",
-      img: "src/assets/creator1.jpg",
+      img: creator1,
       link: "https://www.instagram.com/thecrazychique?igsh=MWEydzA1bnRrdXNxNw==",
     },
     {
       name: "deekshamishraofficial",
-      img: "src/assets/creator2.jpg",
+      img:creator2,
       link: "https://www.instagram.com/deekshamishraofficial?igsh=MWU3NHh2czIzcG42bA==",
     },
     {
       name: "codewith_random",
-      img: "src/assets/creator3.jpg",
+      img: creator3,
       link: "https://www.instagram.com/codewith_random?igsh=MTZxa3Qzandvbjl5dg==",
     },
     {
       name: "_.techhnique.10__",
-      img: "src/assets/creator4.jpg",
+      img: creator4,
       link: "https://www.instagram.com/_.techhnique.10__?igsh=MXZjeTM5NjNuOTdsOQ==",
     },
     {
       name: "Ftechno___explorer",
-      img: "src/assets/creator5.jpg",
+      img: creator5,
       link: "https://www.instagram.com/accounts/login/?next=%2Ftechno___explorer&source=omni_redirect",
     },
   ];

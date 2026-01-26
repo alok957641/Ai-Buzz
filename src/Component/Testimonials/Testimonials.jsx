@@ -1,24 +1,30 @@
+import client1 from "../../assets/creator1.jpg"
+import client2 from "../../assets/creator2.jpg"
+import client3 from "../../assets/creator3.jpg"
+
 export default function Testimonials() {
+  
+  
   const testimonials = [
     {
       name: "Riya Sharma",
       role: "Instagram Creator",
       text: "“AI Buzz Media helped me land high-paying brand deals consistently. My reach and revenue both exploded.”",
-      img: "src/assets/creator1.jpg",
+      img:client1,
       gradient: "from-pink-500 to-purple-600",
     },
     {
       name: "Aman Verma",
       role: "Brand Manager",
       text: "“From influencer selection to campaign execution — everything was smooth and ROI-focused.”",
-      img: "src/assets/creator3.jpg",
+      img: client2,
       gradient: "from-blue-500 to-purple-600",
     },
     {
       name: "Neha Kapoor",
       role: "D2C Founder",
       text: "“Best influencer agency I’ve worked with. Transparent, fast, and growth-driven.”",
-      img: "src/assets/creator2.jpg",
+      img: client3,
       gradient: "from-green-500 to-blue-500",
     },
   ];

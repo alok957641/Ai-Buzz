@@ -1,27 +1,33 @@
+import work1 from "../../assets/work1.jpg"
+import work2 from "../../assets/work2.jpg"
+import work3 from "../../assets/work3.jpg"
+import work4 from "../../assets/work4.jpg"
+
+
 export default function HowItWorks() {
   const steps = [
     {
       title: "Define Goals",
       desc: "We understand your brand objectives, audience, and growth vision.",
-      img: "src/assets/work1.jpg",
+      img:work1,
       icon: "🎯",
     },
     {
       title: "Match Creators",
       desc: "We connect you with creators who truly fit your brand and niche.",
-      img: "src/assets/work2.jpg",
+      img: work2,
       icon: "🤝",
     },
     {
       title: "Launch Campaigns",
       desc: "Authentic content goes live across Instagram, YouTube & Shorts.",
-      img: "src/assets/work3.jpg",
+      img:work3,
       icon: "🎬",
     },
     {
       title: "Track Results",
       desc: "We measure performance, optimize strategy, and scale success.",
-      img: "src/assets/work4.jpg",
+      img:work4,
       icon: "📊",
     },
   ];

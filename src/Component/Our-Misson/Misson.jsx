@@ -1,3 +1,5 @@
+import misson from "../../assets/ourmisson.jpg";
+
 export default function Mission() {
   return (
     <section
@@ -23,7 +25,7 @@ export default function Mission() {
             ></div>
 
             <img
-              src="src/assets/ourmisson.jpg"
+              src={misson}
               alt="Our Mission"
               className="relative rounded-3xl object-cover w-full h-[360px]"
             />
