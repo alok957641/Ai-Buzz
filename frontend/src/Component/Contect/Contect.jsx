@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 
 export default function Contact() {
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     const formData = new FormData(e.target);
     const data = {
@@ -30,15 +28,14 @@ export default function Contact() {
       } else {
         alert("Something went wrong ❌");
       }
-    } catch (err) {
+    } catch {
       alert("Server error ❌");
     }
-
-    setLoading(false);
   };
 
   return (
     <section id="contact" className="relative bg-black py-28 overflow-hidden">
+
       {/* GLOW */}
       <motion.div
         animate={{ y: [0, -25, 0] }}
@@ -48,6 +45,7 @@ export default function Contact() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
+
         {/* HEADING */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -76,7 +74,8 @@ export default function Contact() {
 
         {/* GRID */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* LEFT */}
+
+          {/* LEFT INFO */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -145,16 +144,16 @@ export default function Contact() {
 
             <motion.button
               type="submit"
-              disabled={loading}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full py-4 rounded-full font-semibold text-white
               bg-gradient-to-r from-pink-500 to-purple-600
               hover:drop-shadow-[0_0_30px_rgba(236,72,153,1)]"
             >
-              {loading ? "Sending..." : "Send Message 🚀"}
+              Send Message 🚀
             </motion.button>
           </motion.form>
+
         </div>
       </div>
     </section>

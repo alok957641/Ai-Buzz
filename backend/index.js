@@ -5,16 +5,16 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST"],
-}));
+// middleware
+app.use(cors());
 app.use(express.json());
 
+// test route
 app.get("/", (req, res) => {
-  res.send("Backend running fine 🚀");
+  res.send("Backend running");
 });
 
+// form submit route
 app.post("/send-email", async (req, res) => {
   const { name, email, message } = req.body;
 
@@ -32,9 +32,9 @@ app.post("/send-email", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: email,
       to: process.env.EMAIL_USER,
-      subject: "New Contact Form",
+      subject: "New Form Submission",
       html: `
         <h3>New Contact Form</h3>
         <p><b>Name:</b> ${name}</p>
@@ -43,13 +43,15 @@ app.post("/send-email", async (req, res) => {
       `,
     });
 
-    res.json({ success: true });
-  } catch (err) {
-    console.error("EMAIL ERROR 👉", err);
-    res.status(500).json({ success: false });
-  }
+    res.json({ success: true, msg: "Email sent successfully" });
+ } catch (error) {
+  console.log("EMAIL ERROR 👉", error);   // 👈 ये add कर
+  res.status(500).json({ success: false, msg: "Email failed" });
+}
+
 });
 
-app.listen(process.env.PORT || 10000, () => {
-  console.log("Server running");
+// server start
+app.listen(process.env.PORT, () => {
+  console.log("Server running on port", process.env.PORT);
 });
