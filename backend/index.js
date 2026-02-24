@@ -5,28 +5,21 @@ require("dotenv").config();
 
 const app = express();
 
-// middleware
-app.use(
-  cors({
-    origin: "https://aibuzz.media", // frontend domain
-    methods: ["GET", "POST"],
-  })
-);
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+}));
 app.use(express.json());
 
-// test route
 app.get("/", (req, res) => {
-  res.send("Backend running");
+  res.send("Backend running fine 🚀");
 });
 
-// contact form route
 app.post("/send-email", async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
-    return res
-      .status(400)
-      .json({ success: false, msg: "All fields required" });
+    return res.status(400).json({ success: false, msg: "All fields required" });
   }
 
   try {
@@ -39,9 +32,9 @@ app.post("/send-email", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: `"AiBuzz Contact" <${process.env.EMAIL_USER}>`,
+      from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
-      subject: "New Contact Form Submission",
+      subject: "New Contact Form",
       html: `
         <h3>New Contact Form</h3>
         <p><b>Name:</b> ${name}</p>
@@ -50,15 +43,13 @@ app.post("/send-email", async (req, res) => {
       `,
     });
 
-    res.json({ success: true, msg: "Message sent successfully" });
-  } catch (error) {
-    console.error("EMAIL ERROR 👉", error);
-    res.status(500).json({ success: false, msg: "Email failed" });
+    res.json({ success: true });
+  } catch (err) {
+    console.error("EMAIL ERROR 👉", err);
+    res.status(500).json({ success: false });
   }
 });
 
-// server start
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+app.listen(process.env.PORT || 10000, () => {
+  console.log("Server running");
 });
