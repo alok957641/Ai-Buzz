@@ -27,8 +27,11 @@ app.post("/send-email", async (req, res) => {
   }
 
   try {
+
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // very important
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -36,7 +39,7 @@ app.post("/send-email", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,   // FIX
+      from: process.env.EMAIL_USER,
       replyTo: email,
       to: process.env.EMAIL_USER,
       subject: "New Contact Form Submission",
@@ -48,11 +51,11 @@ app.post("/send-email", async (req, res) => {
       `,
     });
 
-    res.json({ success: true, msg: "Email sent successfully" });
+    res.json({ success: true, msg: "Email sent successfully 🚀" });
 
   } catch (error) {
     console.log("EMAIL ERROR 👉", error);
-    res.status(500).json({ success: false, msg: "Email failed" });
+    res.status(500).json({ success: false, msg: "Email failed ❌" });
   }
 });
 
