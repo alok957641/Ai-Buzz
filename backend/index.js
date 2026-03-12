@@ -23,7 +23,7 @@ app.get("/", (req,res)=>{
 app.post("/send-email", async (req,res)=>{
 
   const { name, email, message } = req.body;
-
+ console.log("BODY 👉", req.body);
   try {
 
     await resend.emails.send({
