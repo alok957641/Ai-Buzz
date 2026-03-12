@@ -14,7 +14,7 @@ export default function Contact() {
     };
 
     try {
-      const res = await fetch("https://ai-buzz.onrender.com/send-email", {
+      const res = await fetchfetch("https://api.aibuzz.media/send-email" , {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
