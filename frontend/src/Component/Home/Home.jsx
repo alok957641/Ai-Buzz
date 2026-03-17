@@ -4,20 +4,45 @@ import { Helmet } from "react-helmet";
 export default function Home() {
   return (
     <>
-      <Helmet>
+     <Helmet>
+
+        {/* Primary SEO */}
         <title>Aibuzz Media | Influencer Marketing Agency</title>
 
         <meta
           name="description"
-          content="Aibuzz Media is a modern influencer marketing agency connecting brands with top creators. Launch powerful campaigns and grow your brand with innovative digital strategies."
+          content="Aibuzz Media connects brands with top influencers to run powerful marketing campaigns. Grow your brand with creative influencer collaborations."
         />
 
         <meta
           name="keywords"
-          content="influencer marketing, creators, brand promotion, digital marketing, Aibuzz Media"
+          content="Aibuzz Media, influencer marketing agency, influencer marketing platform, brand promotion, creator marketing"
         />
 
         <meta name="author" content="Aibuzz Media" />
+
+        {/* Open Graph SEO (Social Media Preview) */}
+        <meta property="og:title" content="Aibuzz Media | Influencer Marketing Agency" />
+        <meta
+          property="og:description"
+          content="Connect brands with top creators and launch powerful influencer campaigns with Aibuzz Media."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://aibuzz.media" />
+        <meta property="og:image" content="https://aibuzz.media/logo.png" />
+
+        {/* Twitter SEO */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Aibuzz Media | Influencer Marketing Agency" />
+        <meta
+          name="twitter:description"
+          content="Aibuzz Media connects brands with influencers for powerful marketing campaigns."
+        />
+        <meta name="twitter:image" content="https://aibuzz.media/logo.png" />
+
+        {/* Indexing */}
+        <meta name="robots" content="index, follow" />
+
       </Helmet>
 
       <section className="relative min-h-screen bg-black flex items-center overflow-hidden px-0 py-12">
