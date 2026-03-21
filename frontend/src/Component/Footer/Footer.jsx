@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 export default function Footer() {
   return (
     <footer className="relative bg-black border-t border-white/10 overflow-hidden">
-
       {/* GLOW */}
       <motion.div
         animate={{ y: [0, -20, 0] }}
@@ -13,7 +12,6 @@ export default function Footer() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-
         {/* TOP */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -22,7 +20,6 @@ export default function Footer() {
           viewport={{ once: true }}
           className="grid gap-12 md:grid-cols-4"
         >
-
           {/* BRAND */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -34,8 +31,8 @@ export default function Footer() {
               AI<span className="text-purple-500">Buzz</span> Media
             </h2>
             <p className="mt-4 text-gray-400 text-sm leading-relaxed">
-              Purpose-led influencer marketing agency helping creators grow
-              and brands scale with real impact.
+              Purpose-led influencer marketing agency helping creators grow and
+              brands scale with real impact.
             </p>
           </motion.div>
 
@@ -54,7 +51,10 @@ export default function Footer() {
                   whileHover={{ x: 6 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <a href={`#${item.toLowerCase()}`} className="hover:text-white">
+                  <a
+                    href={`#${item.toLowerCase()}`}
+                    className="hover:text-white"
+                  >
                     {item}
                   </a>
                 </motion.li>
@@ -97,12 +97,11 @@ export default function Footer() {
           >
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li>Email: contact@aibuzzmedia.com</li>
-              <li>WhatsApp: +91 91137 09625</li>
-              <li>India 🇮🇳</li>
+              <li>Gmail: Support@aibuzz.media</li>
+              <li>Email: Aibuzz645@gmail.com</li>
+              <li>WhatsApp: +91 9135258803</li>
             </ul>
           </motion.div>
-
         </motion.div>
 
         {/* BOTTOM */}
@@ -113,17 +112,10 @@ export default function Footer() {
           viewport={{ once: true }}
           className="mt-16 pt-6 border-t border-white/10
           flex flex-col sm:flex-row gap-4 justify-between items-center"
-        >
-          <p className="text-gray-400 text-sm">
-            © {new Date().getFullYear()} AI Buzz Media. All rights reserved.
-          </p>
-
-          <p className="text-gray-400 text-sm">
-            Built with ❤️ by
-            <span className="text-white font-medium"> Alok Kumar</span>
-          </p>
-        </motion.div>
-
+        ></motion.div>
+        <p className="text-gray-400 text-sm text-center">
+          © {new Date().getFullYear()} AI Buzz Media. All rights reserved.
+        </p>
       </div>
     </footer>
   );

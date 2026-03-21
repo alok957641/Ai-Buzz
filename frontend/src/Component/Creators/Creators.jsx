@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 
+// --- TERA DATA ---
 import creator1 from "../../assets/creator1.jpg";
 import creator2 from "../../assets/creator2.jpg";
 import creator3 from "../../assets/creator3.jpg";
@@ -8,90 +9,74 @@ import creator5 from "../../assets/creator5.jpg";
 
 export default function TrustedCreators() {
   const creators = [
-    {
-      name: "thecrazychique",
-      img: creator1,
-      link: "https://www.instagram.com/thecrazychique?igsh=MWEydzA1bnRrdXNxNw==",
-    },
-    {
-      name: "deekshamishraofficial",
-      img: creator2,
-      link: "https://www.instagram.com/deekshamishraofficial?igsh=MWU3NHh2czIzcG42bA==",
-    },
-    {
-      name: "codewith_random",
-      img: creator3,
-      link: "https://www.instagram.com/codewith_random?igsh=MTZxa3Qzandvbjl5dg==",
-    },
-    {
-      name: "_.techhnique.10__",
-      img: creator4,
-      link: "https://www.instagram.com/_.techhnique.10__?igsh=MXZjeTM5NjNuOTdsOQ==",
-    },
-    {
-      name: "Ftechno___explorer",
-      img: creator5,
-      link: "https://www.instagram.com/accounts/login/?next=%2Ftechno___explorer&source=omni_redirect",
-    },
+    { name: "thecrazychique", img: creator1, link: "https://www.instagram.com/thecrazychique" },
+    { name: "deekshamishraofficial", img: creator2, link: "https://www.instagram.com/deekshamishraofficial" },
+    { name: "codewith_random", img: creator3, link: "https://www.instagram.com/codewith_random" },
+    { name: "_.techhnique.10__", img: creator4, link: "https://www.instagram.com/_.techhnique.10__" },
+    { name: "Ftechno___explorer", img: creator5, link: "https://www.instagram.com/techno___explorer" },
   ];
+
+  // Infinite loop ke liye double data
+  const duplicatedCreators = [...creators, ...creators, ...creators, ...creators];
 
   return (
     <section className="bg-black py-20 overflow-hidden" id="creators">
       <div className="max-w-7xl mx-auto px-6">
-
-        {/* HEADING */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <p className="text-sm uppercase tracking-widest text-gray-400">
-            Our Trusted Creators
-          </p>
+        
+        <div className="text-center mb-12">
+          <p className="text-sm uppercase tracking-widest text-gray-400">Our Trusted Creators</p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mt-2">
             1000+ Verified Influencers Across India
           </h2>
-        </motion.div>
+        </div>
 
-        {/* SLIDER */}
-        <div className="relative overflow-hidden">
-          <motion.div
-            className="flex gap-8"
-            animate={{ x: ["0%", "-70%"] }}   // ✅ MOBILE FIX HERE
-            transition={{
-              duration: 35,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            {[...creators, ...creators, ...creators].map((creator, i) => (
-              <motion.a
+        {/* --- CSS ANIMATION SLIDER --- */}
+        <div className="relative flex overflow-hidden">
+          {/* Is div mein humne CSS animation lagayi hai */}
+          <div className="flex gap-4 sm:gap-8 animate-scroll whitespace-nowrap">
+            {duplicatedCreators.map((creator, i) => (
+              <a
                 key={i}
                 href={creator.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.08, y: -8 }}
-                whileTap={{ scale: 0.95 }}
-                className="min-w-[250px] max-w-[250px]
-                bg-[#111] border border-white/10
-                rounded-2xl p-5 text-center"
+                className="min-w-[200px] sm:min-w-[250px] bg-[#111] border border-white/10 rounded-2xl p-4 sm:p-5 text-center transition-transform hover:scale-105 active:scale-95 flex-shrink-0"
               >
                 <img
                   src={creator.img}
                   alt={creator.name}
-                  className="w-full h-64 object-cover rounded-xl mb-4"
+                  className="w-full h-48 sm:h-64 object-cover rounded-xl mb-4 pointer-events-none"
                 />
-                <p className="text-white font-medium">
-                  {creator.name}
+                <p className="text-white text-xs sm:text-sm font-medium">
+                  @{creator.name}
                 </p>
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
+
+          {/* Side Fades */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black to-transparent z-10"></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black to-transparent z-10"></div>
         </div>
 
       </div>
+
+      {/* --- YAHAN HAI ASLI MAGIC: CSS ANIMATION --- */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+          animation: scroll 30s linear infinite;
+          display: flex;
+          width: max-content;
+        }
+        /* Mobile pe agar koi hath lagaye toh bhi chalta rahega */
+        .animate-scroll:active {
+          animation-play-state: running; 
+        }
+      `}} />
     </section>
   );
 }

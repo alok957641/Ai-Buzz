@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 export default function Stats() {
   const stats = [
     { value: "250+", label: "Creators Onboarded" },
-    { value: "120+", label: "Brand Campaigns" },
-    { value: "10M+", label: "Monthly Reach" },
-    { value: "4.9★", label: "Client Satisfaction" },
+    { value: "99+", label: "Brand Campaigns" },
+    { value: "1M+", label: "Monthly Reach" },
+    { value: "4.1★", label: "Client Satisfaction" },
   ];
 
   return (
