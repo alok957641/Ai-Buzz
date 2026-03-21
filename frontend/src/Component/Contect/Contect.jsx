@@ -18,7 +18,7 @@ export default function Contact() {
 
     try {
       // ⚠️ DHAYAN DE: Agar tera backend live hai toh localhost ki jagah wo URL daalna
-      const res = await fetch("http://localhost:5000/send-email", { 
+      const res = await fetch("https://ai-buzz.onrender.com/send-email", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
