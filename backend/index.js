@@ -22,15 +22,15 @@ app.use(express.json());
 // 2. Transporter with Better Port Settings
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // 587 ke liye false hona chahiye
+  port: 465, // Dobara 465 try karte hain secure mode mein
+  secure: true, 
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // ⚠️ App Password hi rahega
+    pass: process.env.EMAIL_PASS,
   },
-  tls: {
-    rejectUnauthorized: false // Ye line cloud servers par connection issues solve karti hai
-  }
+  // 🛡️ Ye connection timeout aur network errors ko rokne ke liye hai
+  connectionTimeout: 10000, 
+  greetingTimeout: 10000,
 });
 
 
