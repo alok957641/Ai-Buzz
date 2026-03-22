@@ -29,17 +29,14 @@ export default function Contact() {
 
       const result = await res.json();
 
-      if (result.success) {
+      if (res.ok && result.success) {
+        // res.ok check karna safe rehta hai
         alert("Aibuzz Media: Message sent successfully! 🚀");
-        e.target.reset(); // Form khali kar do
+        e.target.reset();
       } else {
-        alert("Opps! Kuch gadbad hai backend mein. ❌");
+        // Agar backend error message bhej raha hai toh wo dikhao
+        alert(result.error || "Opps! Kuch gadbad hai backend mein. ❌");
       }
-    } catch (err) {
-      console.error("FIX THIS ERROR 👉", err);
-      alert(
-        "Server connect nahi ho raha bhai! Check karo backend live hai ya nahi. ❌",
-      );
     } finally {
       setLoading(false); // ✅ Kaam khatam, button wapas normal
     }

@@ -5,29 +5,34 @@ require("dotenv").config();
 
 const app = express();
 
-
+// 1. CORS Update (Sab domains allow karne ke liye deployment ke waqt)
 app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: ["https://aibuzz.media", "http://localhost:5173", "https://www.aibuzz.media"],
+  methods: ["POST", "GET", "OPTIONS"],
+  credentials: true
 }));
-
 
 app.use(express.json());
 
-// --- TRANSPORTER CONFIG ---
+// 2. Transporter with Better Port Settings
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // 587 ke liye false hona chahiye
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS, // ⚠️ App Password hi rahega
   },
+  tls: {
+    rejectUnauthorized: false // Ye line cloud servers par connection issues solve karti hai
+  }
 });
 
-// Verification check
+
+// Verification check (Logs mein check karna)
 transporter.verify((error, success) => {
   if (error) {
-    console.log("❌ LOGIN ERROR:", error.message);
+    console.log("❌ NODEMAILER CONFIG ERROR:", error.message);
   } else {
     console.log("🚀 MAKHANN! Server is ready to send emails!");
   }
@@ -38,48 +43,39 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send-email", async (req, res) => {
-  console.log("📩 Request Aayi Hai:", req.body); // Check karo data aa raha hai ya nahi
-
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
-    console.log("❌ Validation Fail: Fields missing!");
-    return res.status(400).json({ success: false, error: "Missing fields" });
+    return res.status(400).json({ success: false, error: "Saare fields bharo bhai!" });
   }
 
   try {
-    console.log("⏳ Email bhejne ki koshish ho rahi hai...");
-    
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: `"Aibuzz Web" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      replyTo: email,
-      subject: `🔥 New Lead: ${name}`,
-      text: message, // Plain text fallback
-      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`,
+      to: process.env.EMAIL_USER, // Jisme email receive karna hai
+      replyTo: email, // Isse tum direct user ko reply kar paoge
+      subject: `🔥 New Lead from Aibuzz: ${name}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+          <h2 style="color: #ec4899;">New Contact Request</h2>
+          <hr />
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong> ${message}</p>
+        </div>
+      `,
     });
 
-    console.log("✅ Email Sent Successfully! ID:", info.messageId);
-    res.json({ success: true });
+    console.log("✅ Email sent for:", name);
+    res.status(200).json({ success: true, message: "Email Sent!" });
 
   } catch (err) {
-    // 🔥 YE LINE SABSE ZAROORI HAI ERROR DHUNDNE KE LIYE
-    console.error("❌ NODEMAILER ERROR DETAILS:", {
-      message: err.message,
-      code: err.code,
-      command: err.command,
-      response: err.response // Isme Gmail batayega ki kyu block kiya
-    });
-
-    res.status(500).json({ 
-      success: false, 
-      error: "Backend Error", 
-      details: err.message 
-    });
+    console.error("❌ ERROR DETAILS:", err.message);
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// Render hamesha PORT environment variable deta hai, 5000 fixed mat rakhna
+// Port Management for Render
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server started on port ${PORT}`);
