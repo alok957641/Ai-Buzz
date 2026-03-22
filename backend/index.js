@@ -5,24 +5,29 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ CORS FIX (Sabse upar rakho)
-app.use(cors()); 
+
+app.use(cors({
+  origin: "*", 
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+
 app.use(express.json());
 
-// --- TRANSPORTER CONFIG (Direct Gmail Service) ---
+// --- TRANSPORTER CONFIG ---
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER, // Aibuzz645@gmail.com
-    pass: process.env.EMAIL_PASS, // 16-digit App Password (Bina space ke)
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
-// ✅ YE CHECK KAREGA KI LOGIN SAHI HAI YA NAHI
+// Verification check
 transporter.verify((error, success) => {
   if (error) {
-    console.log("❌ LOGIN ERROR: Bhai tera Email ya App Password galat hai!");
-    console.log("Asli Error ye hai 👉", error.message);
+    console.log("❌ LOGIN ERROR:", error.message);
   } else {
     console.log("🚀 MAKHANN! Server is ready to send emails!");
   }
@@ -33,25 +38,49 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send-email", async (req, res) => {
+  console.log("📩 Request Aayi Hai:", req.body); // Check karo data aa raha hai ya nahi
+
   const { name, email, message } = req.body;
 
+  if (!name || !email || !message) {
+    console.log("❌ Validation Fail: Fields missing!");
+    return res.status(400).json({ success: false, error: "Missing fields" });
+  }
+
   try {
-    await transporter.sendMail({
+    console.log("⏳ Email bhejne ki koshish ho rahi hai...");
+    
+    const info = await transporter.sendMail({
       from: `"Aibuzz Web" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
       subject: `🔥 New Lead: ${name}`,
-      html: `<h3>New Message from ${name}</h3><p>${message}</p>`,
+      text: message, // Plain text fallback
+      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`,
     });
 
+    console.log("✅ Email Sent Successfully! ID:", info.messageId);
     res.json({ success: true });
+
   } catch (err) {
-    console.log("❌ SENDING ERROR:", err.message);
-    res.status(500).json({ success: false, error: err.message });
+    // 🔥 YE LINE SABSE ZAROORI HAI ERROR DHUNDNE KE LIYE
+    console.error("❌ NODEMAILER ERROR DETAILS:", {
+      message: err.message,
+      code: err.code,
+      command: err.command,
+      response: err.response // Isme Gmail batayega ki kyu block kiya
+    });
+
+    res.status(500).json({ 
+      success: false, 
+      error: "Backend Error", 
+      details: err.message 
+    });
   }
 });
 
+// Render hamesha PORT environment variable deta hai, 5000 fixed mat rakhna
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server started on port ${PORT}`);
 });
