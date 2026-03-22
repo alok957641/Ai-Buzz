@@ -16,10 +16,10 @@ app.post("/send-email", async (req, res) => {
     // 🚀 Resend API call (Ye port block nahi karta)
    const { data, error } = await resend.emails.send({
   from: "onboarding@resend.dev", 
-  to: "Aibuzz645@gmail.com", // ✅ Sirf apna wahi email daalo jo Resend pe verified hai
-  subject: `🔥 New Lead from Aibuzz: ${name}`,
+  to: "aibuzz645@gmail.com", // ✅ Yahan wahi email dalo jis se Resend account banaya hai
+  subject: `🔥 New Lead from Website: ${name}`,
   html: `
-    <h3>New Message from Website</h3>
+    <h3>New Contact Form Submission</h3>
     <p><strong>Name:</strong> ${name}</p>
     <p><strong>User's Email:</strong> ${email}</p> 
     <p><strong>Message:</strong> ${message}</p>
