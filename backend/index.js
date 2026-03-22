@@ -1,74 +1,42 @@
-// 1. Sabse upar DNS fix (IPv4 force karne ke liye)
-const dns = require('node:dns');
-dns.setDefaultResultOrder('ipv4first');
-
 const express = require("express");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend"); // ✅ API method
 require("dotenv").config();
 
 const app = express();
+const resend = new Resend(process.env.EMAIL_PASS); // EMAIL_PASS me Resend API Key daalo
 
-
-console.log("🛠️  Check Variables:", process.env.EMAIL_USER ? "MIL GAYA ✅" : "NAHI MILA ❌");
-// 2. CORS Setup (Local aur Live dono ke liye)
-app.use(cors({
-  origin: ["https://aibuzz.media", "http://localhost:5173", "https://www.aibuzz.media"],
-  methods: ["POST", "GET", "OPTIONS"],
-  credentials: true
-}));
-
+app.use(cors());
 app.use(express.json());
-
-// 3. Nodemailer Transporter (Port 587 - Render ke liye best)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  connectionTimeout: 30000, // 30 seconds wait karega
-  greetingTimeout: 30000,
-});
-
-
-// Verification Check
-transporter.verify((error, success) => {
-  if (error) {
-    console.log("❌ NODEMAILER CONFIG ERROR:", error.message);
-  } else {
-    console.log("🚀 MAKHANN! Server is ready to send emails!");
-  }
-});
-
-app.get("/", (req, res) => {
-  res.send("Aibuzz Backend is Running 🚀");
-});
 
 app.post("/send-email", async (req, res) => {
   const { name, email, message } = req.body;
 
-  if (!name || !email || !message) {
-    return res.status(400).json({ success: false, error: "Missing fields" });
-  }
-
   try {
-    await transporter.sendMail({
-      from: `"Aibuzz Web" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      replyTo: email,
+    // 🚀 Resend API call (Ye port block nahi karta)
+    const { data, error } = await resend.emails.send({
+      from: "onboarding@resend.dev", // Default yahi rehne do test ke liye
+      to: process.env.EMAIL_USER,    // Tera asli Gmail jahan lead chahiye
       subject: `🔥 New Lead: ${name}`,
-      html: `<h3>New Lead</h3><p>Name: ${name}</p><p>Email: ${email}</p><p>Message: ${message}</p>`,
+      html: `<h3>New Lead from Aibuzz</h3>
+             <p><strong>Name:</strong> ${name}</p>
+             <p><strong>Email:</strong> ${email}</p>
+             <p><strong>Message:</strong> ${message}</p>`,
     });
 
+    if (error) {
+      console.error("❌ RESEND ERROR:", error);
+      return res.status(400).json({ success: false, error });
+    }
+
+    console.log("✅ Email Sent via API!");
     res.json({ success: true });
+
   } catch (err) {
-    console.error("❌ SENDING ERROR:", err.message);
+    console.error("❌ BACKEND CRASH:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ Server started on port ${PORT}`);
-});
+app.listen(PORT, "0.0.0.0", () => console.log(`🚀 API Server on port ${PORT}`));
