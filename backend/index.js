@@ -14,15 +14,17 @@ app.post("/send-email", async (req, res) => {
 
   try {
     // 🚀 Resend API call (Ye port block nahi karta)
-    const { data, error } = await resend.emails.send({
-      from: "onboarding@resend.dev", // Default yahi rehne do test ke liye
-      to: process.env.EMAIL_USER,    // Tera asli Gmail jahan lead chahiye
-      subject: `🔥 New Lead: ${name}`,
-      html: `<h3>New Lead from Aibuzz</h3>
-             <p><strong>Name:</strong> ${name}</p>
-             <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Message:</strong> ${message}</p>`,
-    });
+   const { data, error } = await resend.emails.send({
+  from: "onboarding@resend.dev", 
+  to: "rajankit754184@gmail.com", // ✅ Sirf apna wahi email daalo jo Resend pe verified hai
+  subject: `🔥 New Lead from Aibuzz: ${name}`,
+  html: `
+    <h3>New Message from Website</h3>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>User's Email:</strong> ${email}</p> 
+    <p><strong>Message:</strong> ${message}</p>
+  `,
+});
 
     if (error) {
       console.error("❌ RESEND ERROR:", error);
