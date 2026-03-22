@@ -23,16 +23,22 @@ app.use(express.json());
 // 3. Nodemailer Transporter (Port 587 - Render ke liye best)
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // 587 ke liye false
+  port: 465, 
+  secure: true, // Port 465 ke liye true
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  // 🛡️ Ye lines connection timeout aur network errors ko fix karengi
+  connectionTimeout: 20000, // 20 seconds tak wait karega
+  greetingTimeout: 20000,
+  socketTimeout: 20000,
   tls: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    minVersion: 'TLSv1.2'
   }
 });
+
 
 // Verification Check
 transporter.verify((error, success) => {
