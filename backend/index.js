@@ -9,6 +9,8 @@ require("dotenv").config();
 
 const app = express();
 
+
+console.log("🛠️  Check Variables:", process.env.EMAIL_USER ? "MIL GAYA ✅" : "NAHI MILA ❌");
 // 2. CORS Setup (Local aur Live dono ke liye)
 app.use(cors({
   origin: ["https://aibuzz.media", "http://localhost:5173", "https://www.aibuzz.media"],
