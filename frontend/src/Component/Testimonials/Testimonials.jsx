@@ -13,7 +13,7 @@ export default function Testimonials() {
       color: "from-pink-500 to-rose-500", // Card specific glow
     },
     {
-      name: "Ageta", // ✅ As per your request
+      name: "Aegta", // ✅ As per your request
       role: "Brand ",
       text: "“From influencer selection to campaign execution — everything was smooth and ROI-focused.”",
       img: client2,
