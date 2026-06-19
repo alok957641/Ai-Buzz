@@ -8,8 +8,11 @@
   [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/alok957641/Ai-Buzz)
   [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
   [![Vite](https://img.shields.io/badge/Vite-5.0.0-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+  [![Tailwind](https://img.shields.io/badge/Tailwind-3.3.5-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
   
   ### Connecting Brands with Top Influencers | Data-Driven Marketing Campaigns
+  
+  **Built with ❤️ by Alok Kumar**
   
 </div>
 
@@ -27,6 +30,8 @@
 - 📈 **ROI Tracking** - Measure campaign effectiveness
 - 🎨 **Content Management** - Centralized content library
 - 💰 **Payment Processing** - Secure and timely payouts
+- 📧 **Email Notifications** - Automated contact form email alerts
+- 🧪 **SEO Optimized** - Search engine friendly architecture
 
 ---
 
@@ -40,10 +45,11 @@
 - **React Router DOM** - Navigation
 - **React Helmet** - SEO Optimization
 
-### Backend (Coming Soon)
+### Backend
 - **Node.js** - Runtime Environment
 - **Express.js** - API Framework
 - **MongoDB** - Database
+- **Nodemailer** - Email Service
 - **JWT** - Authentication
 
 ---
@@ -53,33 +59,55 @@
 ```
 Ai-Buzz/
 │
-├── public/
-│   ├── favicon.ico
-│   ├── favicon-16x16.png
-│   ├── favicon-32x32.png
-│   ├── favicon-192x192.png
-│   ├── apple-touch-icon.png
-│   └── logo.png
-│
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx
-│   │   └── Footer.jsx
+├── frontend/
+│   ├── public/
+│   │   ├── favicon.ico
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon-192x192.png
+│   │   ├── apple-touch-icon.png
+│   │   └── logo.png
 │   │
-│   ├── pages/
-│   │   ├── Home.jsx
-│   │   ├── About.jsx
-│   │   ├── Contact.jsx
-│   │   └── Creators.jsx
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Stats.jsx
+│   │   │   ├── HowItWorks.jsx
+│   │   │   ├── Testimonials.jsx
+│   │   │   ├── Services.jsx
+│   │   │   └── Our-Misson.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── About.jsx
+│   │   │   ├── Contact.jsx
+│   │   │   └── Creators.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   │
-│   ├── App.jsx
-│   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── tailwind.config.js
 │
-├── index.html
-├── package.json
-├── vite.config.js
-├── tailwind.config.js
-└── README.md
+├── backend/
+│   ├── controllers/
+│   │   └── emailController.js
+│   ├── models/
+│   │   └── contactModel.js
+│   ├── routes/
+│   │   └── emailRoutes.js
+│   ├── utils/
+│   │   └── emailConfig.js
+│   ├── index.js
+│   └── package.json
+│
+├── .env
+├── .gitignore
+├── README.md
+└── LICENSE
 ```
 
 ---
@@ -91,6 +119,8 @@ Ai-Buzz/
 ```bash
 Node.js (v18 or higher)
 npm (v9 or higher)
+MongoDB (local or cloud)
+Email Service (Gmail/Outlook)
 ```
 
 ### Installation
@@ -102,29 +132,107 @@ git clone https://github.com/alok957641/Ai-Buzz.git
 cd Ai-Buzz
 ```
 
-#### 2️⃣ Install dependencies
+#### 2️⃣ Install Frontend Dependencies
 
 ```bash
+cd frontend
 npm install
 ```
 
-#### 3️⃣ Start development server
+#### 3️⃣ Install Backend Dependencies
 
 ```bash
+cd ../backend
+npm install
+```
+
+#### 4️⃣ Environment Variables
+
+**Frontend `.env` (frontend/):**
+
+```env
+VITE_API_URL=http://localhost:5000
+VITE_GOOGLE_ANALYTICS_ID=UA-XXXXX-X
+```
+
+**Backend `.env` (backend/):**
+
+```env
+PORT=5000
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
+JWT_SECRET=your_jwt_secret_key
+FRONTEND_URL=http://localhost:5173
+
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+EMAIL_RECEIVER=admin@aibuzz.media
+```
+
+#### 5️⃣ Start Development Server
+
+**Frontend:**
+
+```bash
+cd frontend
 npm run dev
 ```
 
-#### 4️⃣ Build for production
+**Backend:**
 
 ```bash
+cd backend
+npm run dev
+```
+
+#### 6️⃣ Build for Production
+
+**Frontend:**
+
+```bash
+cd frontend
 npm run build
 ```
 
-#### 5️⃣ Preview production build
+**Backend:**
 
 ```bash
-npm run preview
+cd backend
+npm run build
 ```
+
+---
+
+## 📧 Email System
+
+### How Contact Form Works
+
+1. User fills contact form on frontend
+2. Data sent to backend API (`/api/contact`)
+3. Backend validates and stores in MongoDB
+4. Nodemailer sends email to admin
+5. User receives confirmation email
+
+### Email Configuration
+
+```javascript
+// backend/utils/emailConfig.js
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
+  }
+});
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/contact` | Send contact email |
+| GET | `/api/contacts` | Get all contacts (admin) |
 
 ---
 
@@ -144,7 +252,7 @@ npm run preview
 |-------|------|-------------|
 | `/` | Home | Landing page with hero section |
 | `/about` | About | Company information & mission |
-| `/contact` | Contact | Get in touch form |
+| `/contact` | Contact | Get in touch form with email |
 | `/creators` | Creators | Our influencer network |
 
 ---
@@ -163,7 +271,7 @@ npm run preview
 
 ## 📦 Dependencies
 
-### Core Dependencies
+### Frontend Dependencies
 
 ```json
 {
@@ -175,19 +283,26 @@ npm run preview
 }
 ```
 
-### Dev Dependencies
+### Backend Dependencies
 
 ```json
 {
-  "vite": "^5.0.0",
-  "tailwindcss": "^3.3.5",
-  "@vitejs/plugin-react": "^4.2.0"
+  "express": "^4.18.2",
+  "mongoose": "^7.0.0",
+  "cors": "^2.8.5",
+  "dotenv": "^16.0.3",
+  "nodemailer": "^6.9.0",
+  "jsonwebtoken": "^9.0.0",
+  "bcryptjs": "^2.4.3",
+  "multer": "^1.4.5"
 }
 ```
 
 ---
 
 ## 🔧 Available Scripts
+
+### Frontend
 
 ```bash
 # Development
@@ -201,6 +316,16 @@ npm run preview      # Preview production build
 
 # Linting
 npm run lint         # Run ESLint
+```
+
+### Backend
+
+```bash
+# Development
+npm run dev          # Start dev server with nodemon
+
+# Production
+npm start            # Start production server
 ```
 
 ---
@@ -233,42 +358,51 @@ npm run lint         # Run ESLint
 
 ## 🚀 Deployment
 
-### Deploy to Vercel (Recommended)
+### Deploy Frontend to Vercel
 
 ```bash
+cd frontend
 npm install -g vercel
 vercel --prod
 ```
 
-### Deploy to Netlify
+### Deploy Backend to Render
 
 ```bash
+# Push code to GitHub
+git push origin main
+
+# Connect repository to Render
+# Root Directory: backend
+# Build Command: npm install
+# Start Command: npm start
+```
+
+### Deploy Frontend to Netlify
+
+```bash
+cd frontend
 npm install -g netlify-cli
 netlify deploy --prod
 ```
-
-### Manual Deployment
-
-1. Run `npm run build`
-2. Upload `dist/` folder to your hosting provider
-3. Configure redirects for React Router
 
 ---
 
 ## 🔐 Environment Variables
 
-Create `.env` file:
-
-```env
-VITE_API_URL=https://api.aibuzz.media
-VITE_GOOGLE_ANALYTICS_ID=UA-XXXXX-X
-```
+| Variable | Description |
+|----------|-------------|
+| `PORT` | Server port (default: 5000) |
+| `MONGO_URI` | MongoDB connection string |
+| `JWT_SECRET` | JSON Web Token secret |
+| `FRONTEND_URL` | Frontend URL for CORS |
+| `EMAIL_USER` | Email address for sending |
+| `EMAIL_PASSWORD` | Email app password |
+| `EMAIL_RECEIVER` | Admin email address |
 
 ---
 
 ## 🤝 Contributing
-
-Contributions are welcome! Follow these steps:
 
 1. **Fork** the Project
 2. **Create** your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -301,12 +435,13 @@ This project is **proprietary and confidential**. All rights reserved by AiBuzz 
 - Tailwind CSS - Styling
 - Framer Motion - Animations
 - Vite - Build Tool
+- Nodemailer - Email Service
 
 ---
 
 <div align="center">
 
-**Built with ❤️ by AiBuzz Media Team**
+**Built with ❤️ by Alok Kumar**
 
 **[⬆ Back to Top](#)**
 
