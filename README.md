@@ -1,6 +1,7 @@
 <div align="center">
   
-  <img src="https://aibuzz.media/logo.png" alt="AiBuzz Media Logo" width="200" />
+  <img width="413" height="416" alt="Ai-Buzz-Media Logo" src="https://github.com/user-attachments/assets/ab3c57c8-bda4-428f-9adb-538ebe9b4b83" />
+
   
   # 🚀 AiBuzz Media | Influencer Marketing Agency
   
