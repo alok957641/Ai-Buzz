@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img width="43" height="46" alt="Ai-Buzz-Media Logo" src="https://github.com/user-attachments/assets/ab3c57c8-bda4-428f-9adb-538ebe9b4b83" />
+  <img width="73" height="76" alt="Ai-Buzz-Media Logo" src="https://github.com/user-attachments/assets/ab3c57c8-bda4-428f-9adb-538ebe9b4b83" />
 
   
   # 🚀 AiBuzz Media | Influencer Marketing Agency
