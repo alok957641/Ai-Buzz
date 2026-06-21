@@ -54,6 +54,25 @@
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+### 🏠 Home Page
+![Home Page]<img width="1883" height="807" alt="Screenshot 2026-06-21 222642" src="https://github.com/user-attachments/assets/aa8ba5af-7b85-436e-875c-b87fa62c1516" />
+
+
+### 🎙️ About Section 
+![About Page] <img width="1883" height="803" alt="Screenshot 2026-06-21 222811" src="https://github.com/user-attachments/assets/6fe8d18a-90a6-44e1-b727-af95123ec95f" />
+
+
+### 📊 Creators
+![Creators]!<img width="1876" height="757" alt="Screenshot 2026-06-21 222932" src="https://github.com/user-attachments/assets/e27fb6a1-479f-468d-9fdc-71957f8b139f" />
+
+</div>
+
+---
+
 ## 📁 Project Structure
 
 ```
