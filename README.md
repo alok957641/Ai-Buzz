@@ -435,10 +435,9 @@ netlify deploy --prod
 
 | Platform | Link |
 |----------|------|
-| **Website** | aibuzz.media |
-| **Email** | hello@aibuzz.media |
+| **Website** |(https://aibuzz.media/) |
+| **Email** |Support@aibuzz.media |
 | **Instagram** | @aibuzz.media |
-| **Twitter** | @aibuzzmedia |
 
 ---
 
